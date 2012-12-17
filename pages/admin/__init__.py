@@ -281,7 +281,7 @@ class PageAdmin(admin.ModelAdmin):
                                     l[0], "title") and l[0] != language]
         extra_context['page'] = obj
         return super(PageAdmin, self).change_view(request, object_id,
-                                                        extra_context)
+            extra_context=extra_context)
 
     def add_view(self, request, form_url='', extra_context=None):
         """The ``add`` admin view for the :class:`Page <pages.models.Page>`."""
@@ -328,7 +328,7 @@ class PageAdmin(admin.ModelAdmin):
         else:
             pages = Page.objects.root()
         if settings.PAGE_HIDE_SITES:
-            pages = pages.filter(sites=settings.SITE_ID)
+            pages = pages.filter(sites=global_settings.SITE_ID)
 
         perms = PagePermission(request.user)
         context = {
